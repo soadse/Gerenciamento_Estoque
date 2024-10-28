@@ -53,13 +53,13 @@ function busca_por_categoria(arg){
         console.log('PRODUTO NÃO ENCONTRADO!')
     }
 }
-busca_por_categoria('touca')
+busca_por_categoria('sapatos')
 
 function relatorio_de_estoque(arg){
     let total_de_itens = produtos.filter(item => item.categoria === arg).length; // Mostra o total de itens diferentes em estoque
     let relatorio = produtos.filter(item => item.categoria === arg) // Pega somente os itens da categoria escolhida
     let todos_nomes = produtos.map(item => item.nome) // Pega todos nomes de produtos em estoque
-    let nome_dos_produtos = relatorio.map(item => item.nome + ' R$:' + item.preco+0 + '\n') // Mostra os nomes e preços dos produtos da mesma categoria escolhida
+    let nome_dos_produtos = relatorio.map(item => item.nome + ' R$' + item.preco+0 + '\n') // Mostra os nomes e preços dos produtos da mesma categoria escolhida
     
     let soma_quantidade_categoria = relatorio.map(item => item.quantidade) // Mostra a quantidade de produtos da categoria escolhida
     let soma_total_categoria = soma_quantidade_categoria.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0) // Soma a quantidade por categoria escolhida
@@ -72,4 +72,4 @@ function relatorio_de_estoque(arg){
     }
     
 }
-relatorio_de_estoque('touca')
+relatorio_de_estoque('sapatos')
