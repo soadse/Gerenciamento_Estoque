@@ -1,5 +1,4 @@
 let produtos = [];
-let copia = [];
 
 console.log('\n-=-=-=-=-=-=-=-=-=-=- Sistema de Gerenciamento de Estoque -=-=-=-=-=-=-=-=-=-=-=-\n')
 
@@ -14,7 +13,7 @@ function cadastrar_produtos(id, nome, categoria, preco, quantidade, localizacao)
         localizacao: localizacao
     }
     produtos.push(novo_produto)
-    // console.log(`Produto: ${nome} cadastrado com sucesso!`)
+    console.log(`Produto: ${nome} cadastrado com sucesso!`)
 }
 
 cadastrar_produtos(1, 'camisa azul', 'camisas', 19.90, 50, 'prateleira de cima')
@@ -28,14 +27,11 @@ cadastrar_produtos(8, 'sapato infantil', 'sapatos', 89.90, 52, 'prateleira do me
 cadastrar_produtos(9, 'bolsa faminina', 'bolsas', 69.90, 74, 'prateleira do lateral')
 cadastrar_produtos(10, 'bolsa masculina', 'bolsas', 49.90, 36, 'prateleira do lateral')
 
-Object.assign(copia, produtos) // Fiz uma copia de lista de array produtos
-
 
 function soma_total_estoque(){
     let total_quantidade = produtos.map(item => item.quantidade ) // Mostra a quantidade de cada item em estoque
     let soma_total_quantidade = total_quantidade.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0) // Soma a quantidade total de itens em estoque
     let nome_dos_produtos = produtos.map(item => 'Produto: ' + item.nome) // Mostra o nome de cada produto em estoque
-    
     console.log(`\nNo momento o estoque tem ${produtos.length} tipos de produtos cadastrados.\n--------------------------`)
     console.log(nome_dos_produtos.join("\n"))
     console.log(`--------------------------\nSomando o total de ${soma_total_quantidade} produtos.`)
@@ -93,4 +89,4 @@ function confirma_compra(confirma, nome_prod){
         console.log('PRODUTO NÃO ENCONTRADO!')
     }
 }
-confirma_compra('sim', 'camisa azul')
+confirma_compra('nao', 'camisa azul')
