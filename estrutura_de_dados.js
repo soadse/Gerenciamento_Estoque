@@ -1,7 +1,9 @@
 let produtos = [];
+let copia = [];
 
 console.log('\n-=-=-=-=-=-=-=-=-=-=- Sistema de Gerenciamento de Estoque -=-=-=-=-=-=-=-=-=-=-=-\n')
 
+// Crie essa função para incluir no final da lista de arrays cada produto criado
 function cadastrar_produtos(id, nome, categoria, preco, quantidade, localizacao){
     let novo_produto = {
         id: id,
@@ -12,7 +14,7 @@ function cadastrar_produtos(id, nome, categoria, preco, quantidade, localizacao)
         localizacao: localizacao
     }
     produtos.push(novo_produto)
-    console.log(`Produto: ${nome} cadastrado com sucesso!`)
+    // console.log(`Produto: ${nome} cadastrado com sucesso!`)
 }
 
 cadastrar_produtos(1, 'camisa azul', 'camisas', 19.90, 50, 'prateleira de cima')
@@ -26,11 +28,13 @@ cadastrar_produtos(8, 'sapato infantil', 'sapatos', 89.90, 52, 'prateleira do me
 cadastrar_produtos(9, 'bolsa faminina', 'bolsas', 69.90, 74, 'prateleira do lateral')
 cadastrar_produtos(10, 'bolsa masculina', 'bolsas', 49.90, 36, 'prateleira do lateral')
 
+Object.assign(copia, produtos) // Fiz uma copia de lista de array produtos
+
+
 function soma_total_estoque(){
     let total_quantidade = produtos.map(item => item.quantidade ) // Mostra a quantidade de cada item em estoque
     let soma_total_quantidade = total_quantidade.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0) // Soma a quantidade total de itens em estoque
     let nome_dos_produtos = produtos.map(item => 'Produto: ' + item.nome) // Mostra o nome de cada produto em estoque
-    
     
     console.log(`\nNo momento o estoque tem ${produtos.length} tipos de produtos cadastrados.\n--------------------------`)
     console.log(nome_dos_produtos.join("\n"))
@@ -53,23 +57,40 @@ function busca_por_categoria(arg){
         console.log('PRODUTO NÃO ENCONTRADO!')
     }
 }
-busca_por_categoria('sapatos')
+busca_por_categoria('camisas')
 
-function relatorio_de_estoque(arg){
-    let total_de_itens = produtos.filter(item => item.categoria === arg).length; // Mostra o total de itens diferentes em estoque
-    let relatorio = produtos.filter(item => item.categoria === arg) // Pega somente os itens da categoria escolhida
+
+function relatorio_de_estoque(prod){
+    let total_de_itens = produtos.filter(item => item.categoria === prod).length; // Mostra o total de itens diferentes em estoque
+    let relatorio = produtos.filter(item => item.categoria === prod) // Pega somente os itens da categoria escolhida
     let todos_nomes = produtos.map(item => item.nome) // Pega todos nomes de produtos em estoque
     let nome_dos_produtos = relatorio.map(item => item.nome + ' R$' + item.preco+0 + '\n') // Mostra os nomes e preços dos produtos da mesma categoria escolhida
-    
     let soma_quantidade_categoria = relatorio.map(item => item.quantidade) // Mostra a quantidade de produtos da categoria escolhida
     let soma_total_categoria = soma_quantidade_categoria.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0) // Soma a quantidade por categoria escolhida
 
-    if(relatorio.find(item => item.categoria === arg)){
-        console.log(`\nEm estoque temos ${total_de_itens} tipos diferentes de ${arg}\nCom o total de ${soma_total_categoria} ${arg} em estoque\nQue são:`)
+    if(relatorio.find(item => item.categoria === prod)){
+        console.log(`\nEm estoque temos ${total_de_itens} tipos diferentes de ${prod}\nCom o total de ${soma_total_categoria} ${prod} em estoque\nQue são:`)
         console.log(nome_dos_produtos.join(""))
     } else {
         console.log('PRODUTO NÃO ENCONTRADO!')
     }
-    
 }
-relatorio_de_estoque('sapatos')
+relatorio_de_estoque('camisas')
+
+
+function confirma_compra(confirma, nome_prod){
+    let escolha = produtos.find(item => item.nome === nome_prod) 
+    if(produtos.find(item => item.nome === nome_prod)){
+        console.log('PRODUTO ENCONTRADO')
+        console.log(`Confimar a compra de: ${nome_prod} por RS${escolha.preco + '0'}?\n${confirma}`)
+        if(confirma === 'sim'){
+            console.log('Compra realizada')
+            console.log(`Restam ${escolha.quantidade -= 1} unidades de ${nome_prod} em estoque. `)
+        } else {
+            console.log('Compra não realizada!')
+        }
+    } else {
+        console.log('PRODUTO NÃO ENCONTRADO!')
+    }
+}
+confirma_compra('sim', 'camisa azul')
